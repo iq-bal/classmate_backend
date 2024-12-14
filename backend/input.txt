@@ -1,0 +1,179 @@
+console.log("-----------------here-----------------");
+
+
+
+
+
+
+
+// async function createCourse() {
+//   try {
+//     const newCourse = new Course({
+//       title: "Data Structures",
+//       description: "Learn the fundamentals of data structures.",
+//       teacher_id: "6759de4f4d1c8adb60cd61a7", // Replace with actual teacher ObjectId
+//       schedule: [
+//         {
+//           section: "A",
+//           room_no: "101",
+//           day: "Monday",
+//           start_time: "10:00 AM",
+//           end_time: "12:00 PM",
+//         },
+//         {
+//           section: "A",
+//           room_no: "102",
+//           day: "Wednesday",
+//           start_time: "02:00 PM",
+//           end_time: "04:00 PM",
+//         },
+//       ],
+//     });
+
+//     await newCourse.save();
+//     console.log("Course created:", newCourse);
+//   } catch (error) {
+//     console.error("Error creating course:", error.message);
+//   }
+// }
+
+// createCourse();
+
+
+
+// Function to create a dummy enrollment
+// async function createEnrollment() {
+//   try {
+//     // Replace these with valid ObjectIds from your database
+//     const courseId = "675bdfc573df8e1ac84f0315"; 
+//     const studentId = "675936fc1222fe79f3386690";
+
+//     const enrollment = new Enrollment({
+//       course_id: courseId,
+//       student_id: studentId,
+//     });
+
+//     await enrollment.save();
+//     console.log("Enrollment created successfully:", enrollment);
+//     return enrollment;
+//   } catch (error) {
+//     console.error("Error creating enrollment:", error.message);
+//     throw error;
+//   }
+// }
+
+// Call the function
+// (async () => {
+//   try {
+//     const result = await createEnrollment();
+//     console.log("Result:", result);
+//   } catch (error) {
+//     console.error("Failed to create enrollment:", error.message);
+//   }
+// })();
+
+
+
+
+// async function insertDummyAssignment() {
+//   try {
+//     // Define the dummy data
+//     const dummyAssignment = {
+//       course_id: "675bdfc573df8e1ac84f0315", // Replace with a valid ObjectId from your Course collection
+//       title: "Introduction to Data Structures",
+//       description: "Complete the exercises on arrays, linked lists, and stacks.",
+//       deadline: new Date("2024-12-20T23:59:59"), // Example deadline
+//     };
+
+//     // Insert the dummy data into the database
+//     const assignment = new Assignment(dummyAssignment);
+//     await assignment.save();
+
+//     console.log("Dummy assignment inserted successfully:", assignment);
+//     return assignment;
+//   } catch (error) {
+//     console.error("Error inserting dummy assignment:", error.message);
+//     throw error;
+//   }
+// }
+
+// Call the function to insert dummy data
+// insertDummyAssignment();
+
+
+// Function to create a dummy submission
+// async function createDummySubmission() {
+//   try {
+//     // Assume these IDs are existing in the database
+//     const assignmentId = "675be780839c81ac03eaad4d"; // Replace with an existing assignment ID
+//     const studentId = "675936fc1222fe79f3386690"; // Replace with an existing student ID
+
+//     // Verify assignment and student exist
+//     const assignment = await Assignment.findById(assignmentId);
+//     const student = await User.findById(studentId);
+
+//     if (!assignment) {
+//       throw new Error("Assignment does not exist.");
+//     }
+
+//     if (!student || student.role !== "student") {
+//       throw new Error("User is not a valid student.");
+//     }
+
+//     // Create the dummy submission
+//     const newSubmission = new Submission({
+//       assignment_id: assignmentId,
+//       student_id: studentId,
+//       file_url: "https://example.com/path/to/file.pdf", // Dummy file URL
+//       plagiarism_score: 15, // Dummy plagiarism score
+//       teacher_comments: "Great work!", // Optional teacher comments
+//       grade: "A", // Optional grade
+//       submitted_at: new Date(), // Current timestamp
+//       evaluated_at: new Date(), // Timestamp when it was evaluated
+//     });
+
+//     // Save the new submission
+//     await newSubmission.save();
+//     console.log("Dummy Submission created successfully:", newSubmission);
+
+//     return newSubmission;
+//   } catch (error) {
+//     console.error("Error creating dummy submission:", error.message);
+//     throw error;
+//   }
+// }
+
+// Call the function to insert dummy data
+// createDummySubmission();
+
+
+
+
+
+
+if (courseDetail != null) {
+        print('Course Title: ${courseDetail!.title}');
+
+        print('Enrolled Students:');
+        for (var student in courseDetail!.enrolledStudents) {
+          print('  - ID: ${student.id}');
+          print('    Name: ${student.name}');
+          print('    Email: ${student.email}');
+          print('    Role: ${student.role}');
+        }
+
+        print('Assignments:');
+        for (var assignment in courseDetail!.assignments) {
+          print('  - ID: ${assignment.id}');
+          print('    Title: ${assignment.title}');
+          print('    Description: ${assignment.description}');
+          // Convert string to int before using DateTime
+          final deadline = int.tryParse(assignment.deadline) ?? 0;
+          final createdAt = int.tryParse(assignment.createdAt) ?? 0;
+
+          print('    Deadline: ${DateTime.fromMillisecondsSinceEpoch(deadline)}');
+          print('    Created At: ${DateTime.fromMillisecondsSinceEpoch(createdAt)}');
+        }
+      } else {
+        print('No course details available.');
+      }

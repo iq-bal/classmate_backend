@@ -1,0 +1,79 @@
+# use rest client extentsion in vscode
+
+
+
+###
+
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name": "prityy",
+    "password": "12345",
+    "role": "student",
+    "email": "prityy@gmail.com"
+}
+
+###
+
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name": "iqbal",
+    "password": "12345",
+    "role": "teacher",
+    "email": "iqbal3@gmail.com"
+}
+
+###
+
+POST http://localhost:3001/api/v1/auth/register
+Content-Type: application/json
+
+{
+    "name": "mahamud",
+    "password": "12345",
+    "role": "teacher",
+    "email": "iqbal4@gmail.com"
+}
+
+###
+
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email":"prityy@gmail.com",
+    "password":"12345"
+}
+
+###
+POST http://localhost:3001/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email":"iqbal@gmail.com",
+    "password":"12345"
+}
+
+###
+GET http://localhost:4000/protected
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0ZjU2ZjRmZC00OWQ4LTQyZTItYjQ1MC1hNWFhN2FlZmM4YzMiLCJuYW1lIjoiaXFiYWwiLCJyb2xlIjoidGVhY2hlciIsImVtYWlsIjoiaXFiYWxAZ21haWwuY29tIiwiaWF0IjoxNzMzOTQ2NTYzLCJleHAiOjE3NDE3MjI1NjN9.Hp1oGOgbrXKoQDxe0WZ7O-8QZZn7DHykZzD7dwXPrzA
+###
+POST http://localhost:3001/api/v1/auth/token
+Content-Type: application/json
+
+{
+"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhYTU5ZDBiNy01ZWMxLTQwOTUtYjhkMi0zMDE1YTc1YTRjNzAiLCJuYW1lIjoicHJpdHl5Iiwicm9sZSI6InN0dWRlbnQiLCJlbWFpbCI6InByaXR5eUBnbWFpbC5jb20iLCJpYXQiOjE3MzM5MDYxMjIsImV4cCI6MTczNDUxMDkyMn0.QcyVXncxFdqW6qRDmnRnXSZsgv8iyQztksB9yVgDY-g"
+}
+
+
+###
+
+DELETE http://localhost:3001/api/v1/auth/logout
+Content-Type: application/json
+
+{
+"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhYTU5ZDBiNy01ZWMxLTQwOTUtYjhkMi0zMDE1YTc1YTRjNzAiLCJuYW1lIjoicHJpdHl5Iiwicm9sZSI6InN0dWRlbnQiLCJlbWFpbCI6InByaXR5eUBnbWFpbC5jb20iLCJpYXQiOjE3MzM5MDYxMjIsImV4cCI6MTczNDUxMDkyMn0.QcyVXncxFdqW6qRDmnRnXSZsgv8iyQztksB9yVgDY-g"
+}
