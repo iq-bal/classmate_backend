@@ -1,0 +1,17 @@
+POST http://localhost:4000/api/v1/create/create-assignment?courseId=675c910186e75d98dc7c5cae
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI0ZjU2ZjRmZC00OWQ4LTQyZTItYjQ1MC1hNWFhN2FlZmM4YzMiLCJuYW1lIjoiaXFiYWwiLCJyb2xlIjoidGVhY2hlciIsImVtYWlsIjoiaXFiYWxAZ21haWwuY29tIiwiaWF0IjoxNzM0MjA2NDkzLCJleHAiOjE3MzU1MDI0OTN9.kEJ5TnQmeKd6WyErr8xBKUCRgiyZgFYVNLXT7GGJdks
+
+{
+  "title": "Amit ekta leura",
+  "description": "Amit leura sharadin chillay, keno chillay khuje ber koro",
+  "deadline": "2024-12-31"
+}
+
+###
+GET http://localhost:4000/api/v1/check/check-submission/675cba0a097be65e5ced61b9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5NDE3YzVjYi0wMmM3LTRlNDQtYWFhYS05NTYwMjZmYWM0ZGMiLCJuYW1lIjoiamFmcmluIiwicm9sZSI6InN0dWRlbnQiLCJlbWFpbCI6ImphZnJpbkBnbWFpbC5jb20iLCJpYXQiOjE3MzQ3MzQ2MzMsImV4cCI6MTczNjAzMDYzM30.M40Rw2FQ681ti50EaaflAaNraTEGh1NSgdgKFiWppZs
+
+
+

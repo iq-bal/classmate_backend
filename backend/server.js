@@ -10,8 +10,21 @@ import Assignment from "./models/assignmentModel.js";
 import Submission from "./models/submissionModel.js";
 import { graphqlHTTP } from 'express-graphql';
 import Student from "./models/studentModel.js";
+import authenticateToken from "./src/api/middleware/authenticate_token.js";
+
+import checkIfTeacher from "./src/api/middleware/check_if_teacher.js";
+import checkIfStudent from "./src/api/middleware/check_if_student.js";
+
+import bodyParser from "body-parser";
 
 import mongoose from "mongoose";
+
+
+import insertDummyStudents from "./seeders/insertDummy.js";
+
+import create_assignment from "./src/api/routes/assignment/create_assignment.js";
+import submit_assignment from "./src/api/routes/assignment/submit_assignment.js";
+import check_submission from "./src/api/routes/assignment/check_submission.js"
 
 import {
   graphql,
@@ -20,8 +33,11 @@ import {
   GraphQLString,
   GraphQLList,
   GraphQLNonNull,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLFloat
 } from 'graphql';
+
+import insertDummy from "./seeders/insertDummy.js";
 
 
 
@@ -31,61 +47,16 @@ dotenv.config();
 // Initialize Express app
 const app = express();
 
+
 // Middleware setup
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json()); 
+app.use("/uploads", express.static("uploads"));
+
 
 
 connectDB();
-
-
-// const CourseType = new GraphQLObjectType({
-//   name: "Course",
-//   description: "This is a course offered by a Teacher",
-//   fields: () => ({
-//     id: { type: new GraphQLNonNull(GraphQLString) }, // ID of the course (same as _id in Mongo)
-//     title: { type: new GraphQLNonNull(GraphQLString) }, // Title of the course
-//     course_code: { type: new GraphQLNonNull(GraphQLString) },
-//     description: { type: new GraphQLNonNull(GraphQLString) }, // Description of the course
-//     teacher_id: { type: new GraphQLNonNull(GraphQLString) }, // Teacher's ObjectId, referenced
-//     teacher: {
-//       type: UserType, // Resolve the teacher field by referencing the UserType
-//       resolve: (course) => {
-//         // Assuming the teacher_id corresponds to the User collection
-//         return mongoose.model("User").findById(course.teacher_id); // Fetch the teacher user data by ID
-//       },
-//     },
-//     schedule: { 
-//       type: new GraphQLList(ScheduleType), // List of schedule entries for the course
-//       resolve: (course) => {
-//         return course.schedule; // Directly return the schedule array
-//       }
-//     },
-//     assignments: {
-//       type: new GraphQLList(AssignmentType),
-//       resolve: async (course) => {
-//         const assignments = await mongoose.model('Assignment').find({ course_id: course._id });
-//         return assignments;
-//       },
-//     },
-//     enrolled_students: {
-//       type: new GraphQLList(UserType),
-//       resolve: async (course) => {
-//         // Find all enrollments for the given course
-//         const enrollments = await mongoose.model('Enrollment').find({ course_id: course._id });
-
-//         // Get the student ids from the enrollments
-//         const studentIds = enrollments.map((enrollment) => enrollment.student_id);
-
-//         // Fetch all students who are enrolled in this course
-//         const students = await mongoose.model('User').find({ '_id': { $in: studentIds } });
-
-//         return students;
-//       },
-//     },
-//     created_at: { type: GraphQLString }, // Created timestamp for the course
-//   }),
-// });
 
 
 
@@ -119,25 +90,6 @@ const CourseType = new GraphQLObjectType({
         return mongoose.model('Assignment').find({ course_id: course._id });
       },
     },
-    // schedule: {
-    //   type: new GraphQLList(ScheduleType),
-    //   args: {
-    //     section: { type: GraphQLString },
-    //     day: { type: GraphQLString },
-    //   },
-    //   resolve: (course, { section, day }) => {
-    //     let schedules = course.schedule;
-
-    //     if (section) {
-    //       schedules = schedules.filter((schedule) => schedule.section === section);
-    //     }
-    //     if (day) {
-    //       schedules = schedules.filter((schedule) => schedule.day === day);
-    //     }
-
-    //     return schedules;
-    //   },
-    // },
     schedule: {
       type: ScheduleType, // Change to a single ScheduleType
       args: {
@@ -154,8 +106,20 @@ const CourseType = new GraphQLObjectType({
 });
 
 
-
-
+const SubmissionType = new GraphQLObjectType({
+  name: "Submission",
+  fields: () => ({
+    id: { type: GraphQLString },
+    assignment_id: { type: new GraphQLNonNull(GraphQLString) },
+    student_id: { type: new GraphQLNonNull(GraphQLString) },
+    file_url: { type: new GraphQLNonNull(GraphQLString) },
+    plagiarism_score: { type: GraphQLFloat },
+    teacher_comments: { type: GraphQLString },
+    grade: { type: GraphQLString },
+    submitted_at: { type: GraphQLString },
+    evaluated_at: { type: GraphQLString },
+  }),
+});
 
 
 const UserType = new GraphQLObjectType({
@@ -191,17 +155,6 @@ const UserType = new GraphQLObjectType({
     },
   }),
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 const StudentType = new GraphQLObjectType({
@@ -242,13 +195,6 @@ const StudentType = new GraphQLObjectType({
 });
 
 
-
-
-
-
-
-
-
 const ScheduleType = new GraphQLObjectType({
   name: 'Schedule',
   description: 'Schedule information for a course, including section, room number, day, and timeslot.',
@@ -270,7 +216,6 @@ const ScheduleType = new GraphQLObjectType({
     },
   }),
 });
-
 
 
 const AssignmentType = new GraphQLObjectType({
@@ -305,6 +250,14 @@ const AssignmentType = new GraphQLObjectType({
       resolve: async (assignment) => {
         const course = await mongoose.model('Course').findById(assignment.course_id);
         return course;
+      },
+    },
+    submissions: { 
+      type: new GraphQLList(SubmissionType), // Use SubmissionType here
+      description: 'List of submissions for this assignment',
+      resolve: async (assignment) => {
+        // Fetch submissions for the given assignment
+        return mongoose.model('Submission').find({ assignment_id: assignment.id });
       },
     },
   }),
@@ -398,8 +351,8 @@ app.get("/protected", authenticateToken, async (req, res) => {
 
 app.use(
   "/graphql",
-  // authenticateToken,
-  // checkIfTeacher,
+  authenticateToken,
+  checkIfTeacher,
   graphqlHTTP({
     schema: schema,
     graphiql: true,
@@ -407,100 +360,14 @@ app.use(
 );
 
 
-// async function insertDummyData() {
-//   const dummyStudents = [
-//     { roll: 1, section: 'A', name: 'John Doe', email: 'john.doe@example.com' },
-//     { roll: 2, section: 'B', name: 'Jane Smith', email: 'jane.smith@example.com' },
-//     { roll: 3, section: 'C', name: 'Sam Wilson', email: 'sam.wilson@example.com' },
-//   ];
-
-//   try {
-//     await Student.insertMany(dummyStudents);
-//     console.log('Dummy data inserted successfully!');
-//   } catch (error) {
-//     console.error('Error inserting dummy data:', error);
-//   }
-// }
-
-// insertDummyData();
 
 
+app.use("/api/v1/create",authenticateToken,checkIfTeacher, create_assignment);
 
-// async function createEnrollment() {
-//   try {
-//     // Replace these with valid ObjectIds from your database
-//     const courseId = "675c910186e75d98dc7c5cae"; 
-//     const studentId = "675cb131c80792e9f500f2d5";
+app.use("/api/v1/submit",authenticateToken,checkIfStudent, submit_assignment);
 
-//     const enrollment = new Enrollment({
-//       course_id: courseId,
-//       student_id: studentId,
-//     });
+app.use("/api/v1/check",authenticateToken,checkIfStudent, check_submission);
 
-//     await enrollment.save();
-//     console.log("Enrollment created successfully:", enrollment);
-//     return enrollment;
-//   } catch (error) {
-//     console.error("Error creating enrollment:", error.message);
-//     throw error;
-//   }
-// }
-
-
-// (async () => {
-//   try {
-//     const result = await createEnrollment();
-//     console.log("Result:", result);
-//   } catch (error) {
-//     console.error("Failed to create enrollment:", error.message);
-//   }
-// })();
-
-
-
-
-
-
-
-
-
-
-function checkIfTeacher(req, res, next) {
-  if (req.user.role !== "teacher") {
-    return res.status(403).json({ message: "Access denied. Teachers only." });
-  }
-  next();
-}
-
-
-
-// Middleware to Authenticate Access Token
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) return res.status(401).json({ message: "Token required" });
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    // if (err) return res.status(403).json({ message: "Invalid token" });
-    if (err) {
-      if (err.name === "TokenExpiredError") {
-        // Token has expired
-        return res.status(401).json({
-          tokenExpired: true,
-          message: "Token expired",
-          expiredAt: err.expiredAt, // Optionally send the expiry time
-        });
-      } else {
-        // Other token verification errors
-        return res.status(403).json({ message: "Invalid token" });
-      }
-    }
-
-    req.user = user;
-    next();
-  });
-}
 
 
 

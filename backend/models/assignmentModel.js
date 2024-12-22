@@ -17,6 +17,7 @@ const assignmentSchema = new mongoose.Schema({
   deadline: {
     type: Date,
     required: true,
+    default: Date.now
   },
   created_at: {
     type: Date,

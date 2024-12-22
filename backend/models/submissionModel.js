@@ -8,7 +8,7 @@ const submissionSchema = new mongoose.Schema({
   },
   student_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User collection
+    ref: "Student", // Reference to the User collection
     required: true,
   },
   file_url: {
@@ -20,6 +20,12 @@ const submissionSchema = new mongoose.Schema({
     min: 0,
     max: 100,
     default: 0, // Default score
+  },
+  ai_generated:{
+    type:Number,
+    min:0,
+    max:100,
+    default:0
   },
   teacher_comments: {
     type: String,
@@ -39,6 +45,10 @@ const submissionSchema = new mongoose.Schema({
   },
 });
 
+
+submissionSchema.index({ assignment_id: 1, student_id: 1 }, { unique: true });
+
+
 // Pre-save hook to validate `assignment_id` and `student_id`
 submissionSchema.pre("save", async function (next) {
   try {
@@ -49,8 +59,9 @@ submissionSchema.pre("save", async function (next) {
     }
 
     // Validate student_id
-    const student = await mongoose.model("User").findById(this.student_id);
-    if (!student || student.role !== "student") {
+    const student = await mongoose.model("Student").findById(this.student_id);
+   
+    if (!student) {
       return next(new Error("Invalid student_id: User does not exist or is not a student."));
     }
 
