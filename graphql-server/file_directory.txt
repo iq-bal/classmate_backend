@@ -1,0 +1,51 @@
+/graphql-server
+│
+├── src
+│   ├── index.js               # Entry point (starts the server)
+│   ├── app.js                 # Express or Apollo server setup
+│   ├── schema.js              # Merges all typeDefs and resolvers
+│   │
+│   ├── graphql
+│   │   ├── modules            # Modular feature-based organization
+│   │   │   ├── user
+│   │   │   │   ├── user.model.js
+│   │   │   │   ├── user.typeDefs.js
+│   │   │   │   ├── user.resolvers.js
+│   │   │   │   └── user.service.js
+│   │   │   ├── course
+│   │   │   │   ├── course.model.js
+│   │   │   │   ├── course.typeDefs.js
+│   │   │   │   ├── course.resolvers.js
+│   │   │   │   └── course.service.js
+│   │   │   └── index.js       # Combines all modules (exports typeDefs/resolvers)
+│   │   │
+│   │   ├── loaders
+│   │   │   ├── databaseLoader.js  # DB connection (e.g., MongoDB, Postgres)
+│   │   │   ├── dataLoader.js      # Batch loading and caching
+│   │   │   └── index.js
+│   │   │
+│   │   └── utils
+│   │       ├── errorHandler.js    # Error handling middleware
+│   │       ├── validators.js      # Input validation
+│   │       └── logger.js          # Logging utility
+│   │
+│   ├── database
+│   │   └── connection.js          # Database connection logic
+│   │
+│   ├── middleware
+│   │   ├── auth.js                # Authentication middleware
+│   │   └── rateLimiter.js         # Rate limiting middleware
+│   │
+│   └── config
+│       ├── default.json           # Default configurations
+│       └── production.json        # Production configurations
+│
+├── tests
+│   ├── integration
+│   ├── unit
+│   └── mocks
+│
+├── .env                          # Environment variables
+├── .gitignore
+├── package.json
+└── README.md

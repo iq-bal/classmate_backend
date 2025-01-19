@@ -20,6 +20,17 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 
 
+
+
+
+// graphql dependencies goes here
+
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
+
+
+
+
 import insertDummyStudents from "./seeders/insertDummy.js";
 
 import create_assignment from "./src/api/routes/assignment/create_assignment.js";
@@ -41,6 +52,12 @@ import insertDummy from "./seeders/insertDummy.js";
 
 
 
+
+
+const PORT = process.env.PORT || 4000;
+
+
+
 // Load environment variables
 dotenv.config();
 
@@ -57,6 +74,9 @@ app.use("/uploads", express.static("uploads"));
 
 
 connectDB();
+
+
+
 
 
 
@@ -371,7 +391,6 @@ app.use("/api/v1/check",authenticateToken,checkIfStudent, check_submission);
 
 
 
-const PORT = process.env.PORT || 4000;
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );

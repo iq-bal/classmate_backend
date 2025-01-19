@@ -16,8 +16,8 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB and Redis
-connectDB();
-connectRedis();
+await connectDB();
+await connectRedis();
 
 // API Routes
 app.use("/api/v1/auth", authRoutes);

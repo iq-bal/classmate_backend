@@ -44,12 +44,14 @@ router.post("/register", async (req, res) => {
 // Login Route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log(email,password);
   try {
     if (!email || !password) {
       return res.status(400).json({ message: "Some fields are missing" });
     }
 
     const user = await User.findOne({ email });
+    
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -101,6 +103,7 @@ router.post("/token", async (req, res) => {
 // Logout Route
 router.delete("/logout", async (req, res) => {
   const { refreshToken } = req.body;
+  
   try {
     if (!refreshToken) {
       return res.status(400).json({ message: "Refresh token is required" });
@@ -108,13 +111,14 @@ router.delete("/logout", async (req, res) => {
 
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const email = decoded.email;
-
+    
     const result = await redisClient.del(`refreshToken:${email}`);
 
     if (result === 0) {
       return res.status(404).json({ message: "Refresh token not found" });
     }
-
+    
+    console.log("Logged out successfully");
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     console.error("Error in /logout:", error);
