@@ -15,7 +15,8 @@ export const getAllStudents = async () => {
 export const getStudentById = async (id) => {
   try {
     // Fetch a single student by ID
-    const student = await Student.findById(id);
+    const student = await Student.findById(id)
+      .populate('user_id', 'name email profile_picture cover_picture');
     if (!student) {
       throw new Error(`Student with ID: ${id} not found.`);
     }
@@ -31,7 +32,8 @@ export const getStudentById = async (id) => {
 export const getStudentByUserId = async (userId) => {
     try {
       // Search for the student document where user_id matches the provided userId
-      const student = await Student.findOne({ user_id: userId });
+      const student = await Student.findOne({ user_id: userId })
+        .populate('user_id', 'name email profile_picture cover_picture');
   
       if (!student) {
         throw new Error(`No student found for user_id: ${userId}`);

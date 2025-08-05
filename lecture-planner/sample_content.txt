@@ -1,0 +1,254 @@
+# Sample Course Content for Testing
+
+This file contains sample content that represents what might be extracted from a PDF textbook or course material. You can use this content to understand what kind of input the lecture plan generator expects.
+
+## Introduction to Computer Science
+
+### Chapter 1: Fundamentals of Computing
+
+Computer Science is the study of computational systems and the design of computer systems and their applications. It encompasses both the theoretical study of algorithms and the practical problems of implementing computing systems in hardware and software.
+
+#### What is Computer Science?
+
+Computer Science is an interdisciplinary field that combines mathematical rigor with creative problem-solving. It involves:
+- Algorithm design and analysis
+- Programming and software development
+- Computer systems and architecture
+- Data structures and databases
+- Artificial intelligence and machine learning
+- Human-computer interaction
+- Computer graphics and visualization
+
+#### Brief History and Evolution
+
+**Early Mechanical Calculators (1600s-1800s)**
+- Blaise Pascal's Pascaline (1642)
+- Gottfried Leibniz's stepped reckoner (1694)
+- Charles Babbage's Difference Engine (1822)
+- Charles Babbage's Analytical Engine (1837)
+
+**Theoretical Foundations (1930s-1940s)**
+- Alan Turing's theoretical work on computation
+- Turing machines and computability theory
+- John von Neumann's stored-program concept
+
+**First Electronic Computers (1940s-1950s)**
+- ENIAC (Electronic Numerical Integrator and Computer)
+- UNIVAC I (Universal Automatic Computer I)
+- IBM 701 and early commercial computers
+
+**Programming Languages Era (1950s-1960s)**
+- Assembly language development
+- FORTRAN (Formula Translation)
+- COBOL (Common Business-Oriented Language)
+- LISP (List Processing)
+
+**Personal Computing Revolution (1970s-1980s)**
+- Microprocessors and personal computers
+- Apple II, IBM PC, and home computing
+- Development of operating systems
+- Graphical user interfaces
+
+**Internet and World Wide Web (1990s)**
+- ARPANET evolution to Internet
+- World Wide Web development
+- Web browsers and HTML
+- E-commerce and online services
+
+**Modern Era (2000s-Present)**
+- Mobile computing and smartphones
+- Cloud computing and distributed systems
+- Social media and web 2.0
+- Big data and data science
+- Artificial intelligence and machine learning
+- Internet of Things (IoT)
+
+### Chapter 2: Algorithms and Problem Solving
+
+#### What is an Algorithm?
+
+An algorithm is a step-by-step procedure for solving a problem or completing a task. It is a finite sequence of well-defined instructions that can be executed by a computer or followed by a person.
+
+**Characteristics of Good Algorithms:**
+- **Correctness**: Produces the correct output for all valid inputs
+- **Efficiency**: Uses computational resources (time and space) effectively
+- **Clarity**: Easy to understand and implement
+- **Generality**: Solves a class of problems, not just specific instances
+
+#### Types of Algorithms
+
+**Sorting Algorithms:**
+- Bubble Sort: Simple but inefficient comparison-based sorting
+- Selection Sort: Finds minimum element and places it at the beginning
+- Insertion Sort: Builds sorted array one element at a time
+- Merge Sort: Divide-and-conquer approach with O(n log n) complexity
+- Quick Sort: Efficient in-place sorting with average O(n log n) complexity
+- Heap Sort: Uses binary heap data structure for sorting
+
+**Search Algorithms:**
+- Linear Search: Sequential search through elements
+- Binary Search: Efficient search in sorted arrays
+- Depth-First Search (DFS): Graph traversal algorithm
+- Breadth-First Search (BFS): Level-by-level graph exploration
+
+**Graph Algorithms:**
+- Shortest Path: Dijkstra's algorithm, Bellman-Ford algorithm
+- Minimum Spanning Tree: Kruskal's and Prim's algorithms
+- Network Flow: Ford-Fulkerson algorithm
+- Topological Sorting: Ordering of vertices in directed acyclic graphs
+
+**Dynamic Programming:**
+- Fibonacci sequence optimization
+- Longest Common Subsequence
+- Knapsack problem
+- Edit distance calculation
+
+#### Applications of Algorithms in Real Life
+
+**Web Search Engines:**
+- PageRank algorithm for ranking web pages
+- Indexing and retrieval algorithms
+- Query processing and optimization
+
+**Social Media:**
+- News feed algorithms
+- Friend recommendation systems
+- Content filtering and moderation
+
+**Transportation:**
+- GPS navigation and route optimization
+- Traffic flow management
+- Ride-sharing algorithms
+
+**E-commerce:**
+- Recommendation systems
+- Price optimization
+- Inventory management
+
+**Healthcare:**
+- Medical image processing
+- Drug discovery algorithms
+- Diagnostic systems
+
+**Finance:**
+- Algorithmic trading
+- Risk assessment
+- Fraud detection
+
+### Chapter 3: Programming Fundamentals
+
+#### Programming Languages
+
+Programming languages are formal languages used to communicate instructions to computers. They provide a way to express algorithms in a form that can be executed by computer systems.
+
+**Categories of Programming Languages:**
+
+**Low-Level Languages:**
+- Machine Language: Binary instructions directly executed by CPU
+- Assembly Language: Human-readable mnemonics for machine instructions
+
+**High-Level Languages:**
+- Procedural: C, Pascal, FORTRAN
+- Object-Oriented: Java, C++, Python, C#
+- Functional: Haskell, Lisp, Erlang
+- Scripting: JavaScript, Python, Ruby
+
+#### Basic Programming Concepts
+
+**Variables and Data Types:**
+- Integers, floating-point numbers, characters, strings
+- Arrays, lists, and collections
+- Variable declaration and initialization
+
+**Control Structures:**
+- Sequential execution
+- Conditional statements (if-else, switch)
+- Loops (for, while, do-while)
+- Function calls and recursion
+
+**Functions and Procedures:**
+- Function definition and calling
+- Parameters and return values
+- Scope and lifetime of variables
+- Recursion and recursive algorithms
+
+**Object-Oriented Programming:**
+- Classes and objects
+- Encapsulation, inheritance, and polymorphism
+- Abstract classes and interfaces
+- Design patterns
+
+### Learning Objectives
+
+By the end of this course, students should be able to:
+
+1. **Understand Computer Science Fundamentals:**
+   - Define computer science and its scope
+   - Explain the historical development of computing
+   - Identify major areas within computer science
+
+2. **Algorithm Design and Analysis:**
+   - Design efficient algorithms for common problems
+   - Analyze time and space complexity
+   - Choose appropriate algorithms for specific tasks
+
+3. **Programming Skills:**
+   - Write programs in at least one high-level language
+   - Use proper programming style and documentation
+   - Debug and test programs effectively
+
+4. **Problem-Solving Abilities:**
+   - Break down complex problems into manageable parts
+   - Apply computational thinking to real-world problems
+   - Evaluate different solution approaches
+
+5. **Professional Skills:**
+   - Work effectively in teams
+   - Communicate technical concepts clearly
+   - Understand ethical implications of computing
+
+### Assignments and Projects
+
+**Programming Assignments:**
+1. Implement basic sorting algorithms
+2. Create a simple calculator program
+3. Design a text-based game
+4. Build a basic web application
+
+**Research Projects:**
+1. History of a specific programming language
+2. Analysis of a famous algorithm
+3. Current trends in computer science
+4. Ethical issues in technology
+
+**Group Projects:**
+1. Collaborative software development
+2. System design and implementation
+3. Presentation of technical topics
+
+### Resources for Further Learning
+
+**Textbooks:**
+- "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and Stein
+- "Computer Science: An Overview" by J. Glenn Brookshear
+- "Structure and Interpretation of Computer Programs" by Abelson and Sussman
+
+**Online Resources:**
+- MIT OpenCourseWare Computer Science courses
+- Coursera and edX computer science programs
+- Khan Academy programming tutorials
+- GitHub for code examples and projects
+
+**Programming Practice:**
+- LeetCode for algorithm practice
+- HackerRank for coding challenges
+- Project Euler for mathematical programming problems
+- Codecademy for interactive learning
+
+**Professional Development:**
+- ACM (Association for Computing Machinery)
+- IEEE Computer Society
+- Local programming meetups and conferences
+- Open source contribution opportunities
+
+This sample content demonstrates the type of comprehensive material that the lecture plan generator can process to create structured, educational lecture plans with appropriate learning objectives, activities, and assessments.

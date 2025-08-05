@@ -1,5 +1,8 @@
 import { getAllTeachers, getTeacherById, createTeacher, updateTeacher, deleteTeacher } from './teacher.service.js';
 import { checkRole } from '../../utils/check_roles.js';
+import { getUserByUID } from '../user/user.service.js';
+import Teacher from './teacher.model.js';
+import User from '../user/user.model.js';
 
 export const resolvers = {
     Query: {
@@ -29,12 +32,12 @@ export const resolvers = {
                 throw new Error("Failed to create teacher");
             }
         },
-        updateTeacher: async (_, { id, teacherInput }, { user }) => {
+        updateTeacher: async (_, { teacherInput }, { user }) => {
             await checkRole("teacher")(user);
             try {
-                return await updateTeacher(id, teacherInput);
+                return await updateTeacher(user, teacherInput);
             } catch (error) {
-                throw new Error("Failed to update teacher");
+                throw new Error(error.message);
             }
         },
         deleteTeacher: async (_, { id }, { user }) => {
@@ -45,5 +48,23 @@ export const resolvers = {
                 throw new Error("Failed to delete teacher");
             }
         }
+    },
+    Teacher: {
+        name: async (parent) => {
+            try {
+                return parent.user_id?.name || null;
+            } catch (error) {
+                console.error('Error resolving teacher name:', error);
+                return null;
+            }
+        },
+        profile_picture: async (parent) => {
+            try {
+                return parent.user_id?.profile_picture || null;
+            } catch (error) {
+                console.error('Error resolving teacher profile picture:', error);
+                return null;
+            }
+        }
     }
-}; 
+};

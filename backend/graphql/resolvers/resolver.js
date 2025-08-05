@@ -10,7 +10,7 @@ const resolvers = {
         return await Course.find();
       } catch (error) {
         throw new Error("Failed to fetch courses");
-      }
+      } 
     },
 
     // Fetch a single course by ID

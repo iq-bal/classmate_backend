@@ -10,26 +10,34 @@ const studentSchema = new mongoose.Schema(
     },
     roll: {
       type: Number,
-      required: true,
-      unique: true,
+      required: false,
+      default:"0000000"
     },
     section: {
       type: String,
-      required: true,
+      required: false,
+      default: "A",
     },
-    name: {
+    about:{
       type: String,
-      required: true,
+      required: false,
+      default: "tell about yourself",
     },
-    email: {
+    department:{
       type: String,
-      required: true,
-      unique: true,
-      match: [
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/, // Simplified and robust regex for email validation
-        'Please enter a valid email address.'
-      ],
+      required: false,
+      default: "Computer Science and Engineering",
     },
+    semester:{
+      type: String,
+      required: false,
+      default: 1,
+    },
+    cgpa:{
+      type: String,
+      required: false,
+      default: 0, 
+    }
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields

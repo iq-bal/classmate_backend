@@ -6,6 +6,7 @@ import Assignment from "../../../../models/assignmentModel.js";
 import Student from "../../../../models/studentModel.js";
 import User from "../../../../models/userModel.js";
 import mongoose from "mongoose";
+import PlagiarismService from "../../../services/plagiarismService.js";
 
 const router = express.Router();
 
@@ -78,9 +79,19 @@ router.post(
       });
 
       
-      // Save the submission
+      // Save the submission first to get the ID
       const savedSubmission = await newSubmission.save();
-      res.status(201).json({ message: "Submission successful", submission: savedSubmission });
+
+      // Start plagiarism check in the background
+      PlagiarismService.checkPlagiarism(savedSubmission._id).catch(error => {
+        console.error('Error in plagiarism check:', error);
+      });
+
+      res.status(201).json({ 
+        message: "Submission successful", 
+        submission: savedSubmission,
+        note: "Plagiarism score will be updated shortly"
+      });
     } catch (error) {
       console.error("Error submitting assignment:", error);
       res.status(500).json({ error: "An error occurred while submitting the assignment" });

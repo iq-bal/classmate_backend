@@ -5,6 +5,8 @@ import { redisClient } from "../config/redis.js";
 import User from "../models/userModel.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/generateTokens.js";
 import { v4 as uuidv4 } from 'uuid';
+import Teacher from "../models/teacherModel.js";
+import Student from "../models/studentModel.js";
 
 const router = express.Router();
 
@@ -19,22 +21,39 @@ router.post("/register", async (req, res) => {
     const userExists = await User.findOne({ email });
 
     console.log(userExists);
+
     if (userExists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = {
+    const newUser = await User.create({
       uid: uuidv4(),
       name,
       email,
       role,
       password: hashedPassword,
-    };
+    });
 
-    await User.create(newUser);
+    console.log(newUser);
+
+    // If the registered user is a teacher, create an entry in Teacher schema
+    if (newUser.role === 'teacher') {
+      await Teacher.create({
+        user_id: newUser._id,
+      });
+    }
+    console.log(newUser);
+    if(newUser.role==='student'){
+      await Student.create({
+        user_id: newUser._id,
+      });
+    }
+
+
     res.status(201).json({ message: "User registered successfully" });
+    
   } catch (error) {
     console.error("Error registering user:", error);
     res.status(500).json({ message: "Internal server error" });

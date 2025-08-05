@@ -9,8 +9,10 @@ import {
     updateTaskStatus,
     addParticipant,
     removeParticipant,
-    deleteTask 
+    deleteTask,
+    respondToTaskInvitation
 } from "./task.service.js";
+import { getUserByUID } from "../user/user.service.js";
 
 export const resolvers = {
     Query: {
@@ -56,6 +58,14 @@ export const resolvers = {
                 return await createTask(taskInput, user);
             } catch (error) {
                 throw new Error(`Failed to create task: ${error.message}`);
+            }
+        },
+        respondToTaskInvitation: async (_, { taskId, response }, { user }) => {
+            try {
+                const userDetails = await getUserByUID(user.uid);
+                return await respondToTaskInvitation(taskId, userDetails._id, response);
+            } catch (error) {
+                throw new Error(`Failed to respond to task invitation: ${error.message}`);
             }
         },
         updateTask: async (_, { id, taskInput }, { user }) => {

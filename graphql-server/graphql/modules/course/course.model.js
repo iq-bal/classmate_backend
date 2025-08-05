@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 // Course Schema
 const courseSchema = new mongoose.Schema({
+  teacher_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher", // Changed from "User" to "Teacher"
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -10,16 +15,22 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  credit: {
+    type: Number,
+    required: true,
+  },
+  excerpt:{
+    type: String,
+    required: false,
+  },
   description: {
     type: String,
     required: false,
   },
-  teacher_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User collection
-    required: true,
+  image: {
+    type: String,
+    required: false,
   },
-  
   created_at: {
     type: Date,
     default: Date.now,
@@ -29,9 +40,9 @@ const courseSchema = new mongoose.Schema({
 // Pre-save hook to validate teacher_id asynchronously
 courseSchema.pre("save", async function (next) {
   try {
-    const user = await mongoose.model("User").findById(this.teacher_id);
-    if (!user || user.role !== "teacher") {
-      return next(new Error("Invalid teacher_id: User does not exist or is not a teacher."));
+    const teacher = await mongoose.model("Teacher").findById(this.teacher_id);
+    if (!teacher) {
+      return next(new Error("Invalid teacher_id: Teacher does not exist."));
     }
     next();
   } catch (error) {

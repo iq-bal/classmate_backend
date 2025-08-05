@@ -29,8 +29,15 @@ const taskSchema = new mongoose.Schema({
         required: true
     },
     participants: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'accepted', 'declined'],
+            default: 'pending'
+        }
     }],
     status: {
         type: String,
@@ -51,15 +58,17 @@ taskSchema.pre('save', async function(next) {
         }
 
         // Validate all participants exist
-        if (this.participants?.length>0) {
+        if (this.participants?.length > 0) {
+            const participantIds = this.participants.map(p => p.user);
             const participants = await User.find({
-                '_id': { $in: this.participants }
+                '_id': { $in: participantIds }
             });
 
-            if (participants.length !== this.participants.length) {
+            if (participants.length !== participantIds.length) {
                 throw new Error('One or more participants do not exist');
             }
         }
+
         next();
     } catch (error) {
         next(error);

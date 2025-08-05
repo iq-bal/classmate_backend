@@ -15,24 +15,24 @@ const scheduleSchema = new mongoose.Schema({
     },
     day: {
         type: String,
-        required: true,
+        required: false,
         enum: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     },
     section: {
         type: String,
-        required: true
+        required: false
     },
     start_time: {
         type: String,
-        required: true
+        required: false
     },
     end_time: {
         type: String,
-        required: true
+        required: false
     },
     room_number: {
         type: String,
-        required: true
+        required: false
     }
 }, {
     timestamps: true
@@ -49,12 +49,10 @@ scheduleSchema.pre('save', async function(next) {
         if (!course) {
             throw new Error('Invalid course_id - Course does not exist');
         }
-
         const teacher = await Teacher.findById(this.teacher_id);
         if (!teacher) {
             throw new Error('Invalid teacher_id - Teacher does not exist');
         }
-
         next();
     } catch (error) {
         next(error);

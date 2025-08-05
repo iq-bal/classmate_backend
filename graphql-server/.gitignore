@@ -1,0 +1,7 @@
+# Environment variables
+.env
+
+# Firebase
+config/firebase-service-account.json
+
+# Existing gitignore entries... 

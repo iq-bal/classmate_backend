@@ -26,6 +26,10 @@ export const getScheduleByCourseAndDayAndTeacher = async (course_id, day, teache
     return await Schedule.findOne({ course_id, day, teacher_id });
 };
 
+export const getScheduleByCourseAndDayAndSection = async (course_id, day, section) => {
+    return await Schedule.findOne({ course_id, day, section });
+};
+
 export const getSchedulesByTeacher = async (teacher_id) => {
     return await Schedule.find({ teacher_id })
         .populate('course_id')
@@ -40,6 +44,8 @@ export const createSchedule = async (scheduleInput, user) => {
         if (!teacherDetails) {
             throw new Error("Teacher not found");
         }
+
+        // console.log(scheduleInput);
 
         return await Schedule.create({
             ...scheduleInput,
@@ -61,4 +67,4 @@ export const updateSchedule = async (id, scheduleInput) => {
 
 export const deleteSchedule = async (id) => {
     return await Schedule.findByIdAndDelete(id);
-}; 
+};

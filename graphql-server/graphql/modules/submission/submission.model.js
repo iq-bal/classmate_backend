@@ -32,8 +32,9 @@ const submissionSchema = new mongoose.Schema({
     default: "", // Optional comments
   },
   grade: {
-    type: String,
-    enum: ["A", "B", "C", "D", "F", null], // Optional grade
+    type: Number,
+    min: 0,
+    max: 100,
     default: null,
   },
   submitted_at: {

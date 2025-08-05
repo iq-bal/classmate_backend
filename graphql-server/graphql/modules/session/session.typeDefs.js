@@ -3,6 +3,7 @@ export const typeDefs = `#graphql
     id: ID!
     title: String!
     description: String
+    date: String!
     start_time: String!
     end_time: String!
     status: String!
@@ -17,6 +18,7 @@ export const typeDefs = `#graphql
     course_id: ID!
     title: String!
     description: String
+    date: String!
     start_time: String!
     end_time: String!
     meeting_link: String

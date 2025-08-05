@@ -1,4 +1,5 @@
-import { getAllSyllabus, getSyllabusById } from "./syllabus.service.js";
+import { getAllSyllabus, getSyllabusById, updateSyllabus } from "./syllabus.service.js";
+import { checkRole } from "../../utils/check_roles.js";
 
 export const resolvers = {
   Query: {
@@ -10,13 +11,24 @@ export const resolvers = {
           throw new Error("Could not fetch syllabuses.");
         }
     },
-    submission: async (_, { id }) => {
+    syllabus: async (_, { id }) => {
         try {
           return await getSyllabusById(id);
         } catch (error) {
-          console.error(`Error fetching submission with ID: ${id}`, error);
-          throw new Error(`Could not fetch submission with ID: ${id}.`);
+          console.error(`Error fetching syllabus with ID: ${id}`, error);
+          throw new Error(`Could not fetch syllabus with ID: ${id}.`);
         }
+    },
+  },
+  Mutation: {
+    updateSyllabus: async (_, { course_id, syllabus }, { user }) => {
+      await checkRole("teacher")(user);
+      try {
+        return await updateSyllabus(course_id, syllabus);
+      } catch (error) {
+        console.error(`Error updating syllabus for course ID: ${course_id}`, error);
+        throw new Error("Could not update syllabus.");
+      }
     },
   },
 };

@@ -6,6 +6,11 @@ const assignmentSchema = new mongoose.Schema({
     ref: "Course", // Reference to the Course collection
     required: true,
   },
+  teacher_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher", // Reference to the Teacher collection
+    required: true,
+  },
   title: {
     type: String,
     required: true,

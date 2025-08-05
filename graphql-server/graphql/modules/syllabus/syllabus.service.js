@@ -36,3 +36,23 @@ export const getSyllabusById = async (id) => {
         throw new Error("Could not fetch syllabus by id.");
     }
 };
+
+export const updateSyllabus = async (course_id, syllabusData) => {
+    try {
+        const syllabus = await Syllabus.findOneAndUpdate(
+            { course_id },
+            { 
+                syllabus: syllabusData,
+                updatedAt: new Date()
+            },
+            { new: true, runValidators: true }
+        );
+        if (!syllabus) {
+            throw new Error(`Syllabus not found for course_id: ${course_id}`);
+        }
+        return syllabus;
+    } catch (error) {
+        console.error(`Error updating syllabus for course_id ${course_id}:`, error);
+        throw new Error("Could not update syllabus.");
+    }
+};

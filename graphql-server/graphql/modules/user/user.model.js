@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    cover_picture: {
+      type: String,
+      required: false,
+    },
     profile_picture: {
       type: String,
       required: false,

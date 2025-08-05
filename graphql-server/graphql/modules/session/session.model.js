@@ -23,6 +23,25 @@ const classSessionSchema = new mongoose.Schema(
     topic: {
       type: String,
       trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    status: {
+      type: String,
+      enum: ['scheduled', 'active', 'completed', 'cancelled'],
+      default: 'scheduled',
+      required: true,
+    },
+    meeting_link: {
+      type: String,
+      trim: true,
+    },
+    teacher_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Teacher",
+      required: true,
     }
   },
   { timestamps: true }

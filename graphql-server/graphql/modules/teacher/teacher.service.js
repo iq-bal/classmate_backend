@@ -17,11 +17,29 @@ export const createTeacher = async (teacherData) => {
     return await Teacher.create(teacherData);
 };
 
-export const updateTeacher = async (id, teacherData) => {
-    return await Teacher.findByIdAndUpdate(id, teacherData, { new: true });
+export const updateTeacher = async (user, teacherData) => {
+    try {
+        const userDetails = await getUserByUID(user.uid);
+        const teacher = await Teacher.findOne({ user_id: userDetails._id });
+        if (!teacher) {
+            throw new Error('Teacher not found');
+        }
+
+        // Only update fields that are provided
+        Object.keys(teacherData).forEach(key => {
+            if (teacherData[key] !== undefined) {
+                teacher[key] = teacherData[key];
+            }
+        });
+
+        await teacher.save();
+        return await teacher.populate('user_id');
+    } catch (error) {
+        throw new Error(`Failed to update teacher: ${error.message}`);
+    } 
 };
 
 export const deleteTeacher = async (id) => {
     return await Teacher.findByIdAndDelete(id);
-}; 
+};  
 

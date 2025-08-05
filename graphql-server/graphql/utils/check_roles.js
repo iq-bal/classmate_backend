@@ -7,7 +7,7 @@ export const checkRole = (requiredRole) => {
         if (user.role !== requiredRole) {
             throw new Error(`Access denied. Required role: ${requiredRole}`);
         }
-
+        
         return true;
     };
 };

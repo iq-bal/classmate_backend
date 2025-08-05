@@ -6,12 +6,12 @@ const syllabusSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course", // Reference to the Course collection
     required: true,
-    unique: true, // Ensure course_id is unique (if needed)
+    // unique: true, // Ensure course_id is unique (if needed)
   },
   syllabus: {
     type: Map,
-    of: [String], // Each module will be an array of subtopics (strings)
-    required: true,
+    of: [String], 
+    required: false,
   },
   createdAt: {
     type: Date,

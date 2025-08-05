@@ -1,18 +1,21 @@
 export const typeDefs = `#graphql
   type Schedule {
     id: ID!
-    day: String!
-    section: String!
-    start_time: String!
-    end_time: String!
-    room_number: String!
+    day: String
+    section: String
+    start_time: String
+    end_time: String
+    room_number: String
     createdAt: String
     updatedAt: String
+    teacher_id: Teacher
+    course_id: Course
   }
 
   input ScheduleInput {
     course_id: ID!
     day: String!
+    section: String!
     start_time: String!
     end_time: String!
     room_number: String!

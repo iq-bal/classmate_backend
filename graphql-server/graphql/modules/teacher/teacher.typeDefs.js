@@ -2,18 +2,21 @@ export const typeDefs = `#graphql
   type Teacher {
     id: ID!
     user_id: User!
-    name: String!
+    name: String
+    about: String!
     department: String!
     designation: String!
     joining_date: String
     createdAt: String
     updatedAt: String
+    profile_picture: String
+    courses: [Course!]!
   }
 
   input TeacherInput {
-    user_id: ID!
-    department: String!
-    designation: String!
+    about: String
+    department: String
+    designation: String
     joining_date: String
   }
 
@@ -24,7 +27,7 @@ export const typeDefs = `#graphql
 
   type Mutation {
     createTeacher(teacherInput: TeacherInput!): Teacher
-    updateTeacher(id: ID!, teacherInput: TeacherInput!): Teacher
+    updateTeacher(teacherInput: TeacherInput!): Teacher
     deleteTeacher(id: ID!): Teacher
   }
-`; 
+`;

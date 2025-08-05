@@ -5,8 +5,9 @@ const authenticateToken = (req) => {
   
   const token = authHeader && authHeader.split(" ")[1];
 
-
-  // console.log("token", token);
+  console.log("token", token);  
+  console.log("ever came here................"); 
+  
   if (!token) {
     throw new Error("Token required");
   }

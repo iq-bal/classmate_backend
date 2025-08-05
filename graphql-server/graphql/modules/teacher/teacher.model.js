@@ -9,22 +9,27 @@ const teacherSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  name:{
+  about:{
     type: String,
-    required: true
+    required: false,
+    default:'Tell your students more about yourself'
   },
   department: {
     type: String,
-    required: true
+    required: false,
+    default: 'Dept of Rizz Engineering'
   },
   designation: {
     type: String,
-    required: true
+    required: false,
+    default: 'Professor'
   },
   joining_date: {
     type: Date,
     default: Date.now
-  }
+  },
+  
+
 }, {
   timestamps: true
 });

@@ -37,6 +37,8 @@ export const resolvers = {
         }
     },
     Session: {
+        title: (parent) => parent.topic, // Map database topic field to GraphQL title field
+        date: (parent) => parent.date, // Ensure date field is returned
         attendance: async (parent, _, { user }) => {
             try {
                 if (!user) {
@@ -55,7 +57,13 @@ export const resolvers = {
         createSession: async (_, { sessionInput }, { user }) => {
             await checkRole("teacher")(user);
             try {
-                return await createSession(sessionInput, user);
+                // Map GraphQL fields to database model fields
+                const mappedInput = {
+                    ...sessionInput,
+                    topic: sessionInput.title // Map title to topic for database
+                };
+                delete mappedInput.title; // Remove title field
+                return await createSession(mappedInput, user);
             } catch (error) {
                 throw new Error(`Failed to create session: ${error.message}`);
             }
