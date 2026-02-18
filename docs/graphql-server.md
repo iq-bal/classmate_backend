@@ -13,9 +13,11 @@ graph TD
     ApolloServer -->|Real-time| SocketIO
 ```
 
-## Key Modules
-- **Chat System**: See `docs/graphql-server/CHAT_SYSTEM_GUIDE.md`
-- **Attendance**: See `docs/graphql-server/ATTENDANCE_SYSTEM.md`
+## detailed Guides
+- **Architecture Overview**: [architecture-overview.md](docs/graphql-server/architecture-overview.md)
+- **Chat System**: [chat-system-guide.md](docs/graphql-server/chat-system-guide.md)
+- **Attendance System**: [attendance-system-guide.md](docs/graphql-server/attendance-system-guide.md)
+- **Forum System**: [forum-system-guide.md](docs/graphql-server/forum-system-guide.md)
 
 ## Setup
 1. `npm install`

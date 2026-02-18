@@ -19,4 +19,4 @@ graph TD
 - `POST /ask`: Ask a question contextually dependent on a knowledge base.
 
 ## Documentation
-- Detailed API docs moved to: `docs/rag-server/API_DOCUMENTATION.md`
+- Detailed API Reference: [api-reference.md](docs/rag-server/api-reference.md)
